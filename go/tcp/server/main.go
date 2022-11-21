@@ -16,6 +16,8 @@ func main() {
 	fmt.Println("Started tcp server on port 8080")
 	conn, err := ln.Accept()
 
+	defer conn.Close()
+
 	if err != nil {
 		log.Fatal((err))
 	}
