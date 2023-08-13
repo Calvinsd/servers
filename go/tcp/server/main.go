@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net"
+	"time"
 )
 
 func main() {
@@ -13,27 +13,33 @@ func main() {
 		log.Fatal((err))
 	}
 
-	fmt.Println("Started tcp server on port 8080")
-	conn, err := ln.Accept()
+	log.Println("Started tcp server on port 8080")
 
-	defer conn.Close()
+	for {
+		log.Println("Accepting connection.....")
+		conn, err := ln.Accept()
 
-	if err != nil {
-		log.Fatal((err))
+		if err != nil {
+			log.Fatal((err))
+		}
+
+		go handleConnection(conn)
 	}
-
-	handleConnection(conn)
 }
 
 func handleConnection(conn net.Conn) {
+
 	var data = make([]byte, 1024)
+
 	n, err := conn.Read(data)
 
 	if err != nil {
 		log.Fatal((err))
 	}
 
-	fmt.Println(n, string(data))
+	log.Println(n, string(data))
+
+	time.Sleep(5 * time.Second)
 
 	conn.Close()
 }

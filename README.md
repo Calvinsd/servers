@@ -1,2 +1,2 @@
 # servers
-Different Servers in different langs
+Implementation of different kinds of servers.
